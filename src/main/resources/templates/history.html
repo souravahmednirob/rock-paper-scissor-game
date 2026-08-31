@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Game History</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Game History</h1>
+
+    <table class="history-table" th:if="${!games.isEmpty()}">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Player</th>
+            <th>Wins</th>
+            <th>Losses</th>
+            <th>Draws</th>
+            <th>Created</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="g : ${games}">
+            <td th:text="${g.id}">1</td>
+            <td th:text="${g.playerName}">Player</td>
+            <td th:text="${g.playerScore}">0</td>
+            <td th:text="${g.computerScore}">0</td>
+            <td th:text="${g.draws}">0</td>
+            <td th:text="${#temporals.format(g.createdAt, 'yyyy-MM-dd HH:mm')}">-</td>
+            <td><a th:href="@{'/games/' + ${g.id}}">Open</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p th:if="${games.isEmpty()}">No games played yet.</p>
+
+    <div class="links">
+        <a th:href="@{/}">Back to Home</a>
+    </div>
+</div>
+</body>
+</html>

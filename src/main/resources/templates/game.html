@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Playing - Rock Paper Scissors</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Rock Paper Scissors</h1>
+    <h2>Player: <span th:text="${game.playerName}">Player</span></h2>
+
+    <div class="scoreboard">
+        <div class="score-card you">
+            <div class="label">You</div>
+            <div class="value" id="playerScore" th:text="${game.playerScore}">0</div>
+        </div>
+        <div class="score-card draw">
+            <div class="label">Draws</div>
+            <div class="value" id="draws" th:text="${game.draws}">0</div>
+        </div>
+        <div class="score-card computer">
+            <div class="label">Computer</div>
+            <div class="value" id="computerScore" th:text="${game.computerScore}">0</div>
+        </div>
+    </div>
+
+    <!-- Battle Arena -->
+    <div class="arena" id="arena">
+        <div class="arena-side player-side">
+            <div class="hand-label">YOU</div>
+            <div class="hand" id="playerHand">
+                <span class="hand-icon">✊</span>
+            </div>
+        </div>
+
+        <div class="arena-center">
+            <div class="countdown" id="countdown"></div>
+            <div class="result-banner" id="resultBanner"></div>
+        </div>
+
+        <div class="arena-side computer-side">
+            <div class="hand-label">CPU</div>
+            <div class="hand" id="computerHand">
+                <span class="hand-icon">✊</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Choose Your Weapon -->
+    <h3 class="choose-title">Choose your weapon</h3>
+    <div class="move-buttons">
+        <button class="choice-btn" data-move="ROCK" title="Rock">
+            <span class="choice-icon">✊</span>
+            <span class="choice-label">Rock</span>
+        </button>
+        <button class="choice-btn" data-move="PAPER" title="Paper">
+            <span class="choice-icon">✋</span>
+            <span class="choice-label">Paper</span>
+        </button>
+        <button class="choice-btn" data-move="SCISSORS" title="Scissors">
+            <span class="choice-icon">✌️</span>
+            <span class="choice-label">Scissors</span>
+        </button>
+    </div>
+
+    <!-- Round History -->
+    <h3>Round History</h3>
+    <table class="history-table" id="historyTable" th:if="${!game.rounds.isEmpty()}">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>You</th>
+            <th>Computer</th>
+            <th>Result</th>
+        </tr>
+        </thead>
+        <tbody id="historyBody">
+        <tr th:each="round, iter : ${game.rounds}">
+            <td th:text="${iter.count}">1</td>
+            <td th:text="${round.playerMove}">ROCK</td>
+            <td th:text="${round.computerMove}">PAPER</td>
+            <td th:text="${round.result}"
+                th:classappend="${round.result.name() == 'WIN'} ? 'win' : (${round.result.name() == 'LOSE'} ? 'lose' : 'draw')">
+                WIN
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p id="noRoundsMsg" th:if="${game.rounds.isEmpty()}">No rounds played yet. Make your first move!</p>
+
+    <div class="links">
+        <a th:href="@{/}">New Game</a>
+        <a th:href="@{/history}">All Games</a>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    window.GAME_ID = /*[[${game.id}]]*/ 0;
+</script>
+<script th:src="@{/js/game.js}"></script>
+</body>
+</html>

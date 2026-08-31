@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>Rock &#129704; Paper &#128196; Scissors &#9986;</h1>
+    <p class="subtitle">Play the classic game against the computer!</p>
+
+    <form th:action="@{/games/start}" method="post" class="start-form">
+        <label for="playerName">Enter your name:</label>
+        <input type="text" id="playerName" name="playerName" placeholder="Your name" required>
+        <button type="submit" class="btn btn-primary">Start New Game</button>
+    </form>
+
+    <div class="links">
+        <a th:href="@{/history}">View Game History</a>
+    </div>
+</div>
+</body>
+</html>
