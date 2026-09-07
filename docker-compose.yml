@@ -19,6 +19,7 @@ services:
       DB_PASSWORD: secret123
     depends_on:
       - db
+    restart: unless-stopped
     deploy:
       resources:
         limits:
